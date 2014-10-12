@@ -24,22 +24,13 @@ namespace NeukSearch
         private void Form1_Load(object sender, EventArgs e)
         {
             mng = new MenuManager();
-            mng.crawl(new IntPtr(0x000C0CBE));
 
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            List<string> searchResult = mng.search(tbInput.Text);
-
-            string str = "";
-
-            foreach (string s in searchResult)
+            
+            if ( !mng.crawl(new IntPtr(0x000C0CBE)) )
             {
-                str += s + "\r\n";
+                MessageBox.Show("메뉴 없음");
             }
 
-            tbResult.Text = str;
         }
 
         private void tbInput_TextChanged(object sender, EventArgs e)

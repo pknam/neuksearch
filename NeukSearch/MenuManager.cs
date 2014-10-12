@@ -17,7 +17,7 @@ namespace NeukSearch
         List<Menu> aaMenus;
 
         // window handle을 이용해 타겟 선택
-        public void crawl(IntPtr hwnd)
+        public bool crawl(IntPtr hwnd)
         {
             AutomationElement aeDesktop = AutomationElement.RootElement;
             AutomationElement aeForm = aeDesktop.FindFirst(TreeScope.Children,
@@ -29,6 +29,10 @@ namespace NeukSearch
                 new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.MenuBar));
 
 
+            // 메뉴 없음
+            if (menubars.Count == 0)
+                return false;
+
 
             AutomationElement menuitem = menubars[0];
             AutomationElementCollection menus = menuitem.FindAll(TreeScope.Children,
@@ -37,6 +41,8 @@ namespace NeukSearch
 
             // 임시
             aaMenus = crawlMenus(menus, null);
+
+            return true;
         }
 
         public List<string> search(string input)
