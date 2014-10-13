@@ -7,3 +7,6 @@ C:\Users\pknam\CloudStation\sources\cs\NeukSearch\NeukSearch\obj\Debug\NeukSearc
 C:\Users\pknam\CloudStation\sources\cs\NeukSearch\NeukSearch\obj\Debug\NeukSearch.csproj.GenerateResource.Cache
 C:\Users\pknam\CloudStation\sources\cs\NeukSearch\NeukSearch\obj\Debug\NeukSearch.exe
 C:\Users\pknam\CloudStation\sources\cs\NeukSearch\NeukSearch\obj\Debug\NeukSearch.pdb
+C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\bin\Debug\NeukSearch.exe.config
+C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.exe
+C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.pdb
