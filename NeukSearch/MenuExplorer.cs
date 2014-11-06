@@ -52,6 +52,10 @@ namespace NeukSearch
             AutomationElement aeForm = aeDesktop.FindFirst(TreeScope.Children,
                     new PropertyCondition(AutomationElement.NativeWindowHandleProperty, hwnd.ToInt32()));
 
+            // invalid hwnd
+            if (aeForm == null)
+                return null;
+
             AutomationElementCollection menubars = aeForm.FindAll(TreeScope.Children,
                 new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.MenuBar));
 
