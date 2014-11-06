@@ -23,10 +23,10 @@ namespace NeukSearch
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            mng = new MenuManager();
+            mng = MenuManager.Instance;
 
-            
-            if ( !mng.crawl(new IntPtr(0x000C0CBE)) )
+
+            if (!MenuCrawler.crawl(new IntPtr(0x002B0B72)))
             {
                 MessageBox.Show("메뉴 없음");
             }
@@ -45,6 +45,13 @@ namespace NeukSearch
             }
 
             tbResult.Text = str;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // invoke test.
+            // SUXEX
+            MenuManager.Instance.MenuSet[new IntPtr(0x002B0B72)][5].Descendents[5].invoke();
         }
     }
 }
