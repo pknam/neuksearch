@@ -26,32 +26,54 @@ namespace NeukSearch
             mng = MenuManager.Instance;
 
 
-            if (!MenuCrawler.crawl(new IntPtr(0x00261B7E)))
+            if (!MenuCrawler.crawl(new IntPtr(0x004D10EA)))
             {
                 MessageBox.Show("메뉴 없음");
             }
+
+
 
         }
 
         private void tbInput_TextChanged(object sender, EventArgs e)
         {
-            List<string> searchResult = mng.search(tbInput.Text);
+            List<Menu> searchResult = mng.search(tbInput.Text);
 
-            string str = "";
 
-            foreach (string s in searchResult)
-            {
-                str += s + "\r\n";
-            }
 
-            tbResult.Text = str;
+
+            listBox1.DataSource = searchResult;
+            
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             // invoke test.
             // SUXEX
-            MenuManager.Instance.MenuSet[new IntPtr(0x00261B7E)][5].Descendents[5].invoke();
+            MenuManager.Instance.MenuSet[new IntPtr(0x004D10EA)][5].Descendents[5].invoke();
+        }
+
+        private void tbInput_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            switch(e.KeyCode)
+            {
+                case Keys.Down:
+                    if (listBox1.SelectedIndex < listBox1.Items.Count - 1)
+                        listBox1.SetSelected(listBox1.SelectedIndex + 1, true);
+                    break;
+
+                case Keys.Up:
+                    if (listBox1.SelectedIndex > 0)
+                        listBox1.SetSelected(listBox1.SelectedIndex - 1, true);
+                    break;
+
+                case Keys.Enter:
+                    Menu selected = listBox1.SelectedItem as Menu;
+                    selected.invoke();
+                    break;
+            }
         }
     }
 }
