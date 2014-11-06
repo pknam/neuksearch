@@ -31,8 +31,6 @@ namespace NeukSearch
                 MessageBox.Show("메뉴 없음");
             }
 
-
-
         }
 
         private void tbInput_TextChanged(object sender, EventArgs e)
@@ -40,18 +38,7 @@ namespace NeukSearch
             List<Menu> searchResult = mng.search(tbInput.Text);
 
 
-
-
             listBox1.DataSource = searchResult;
-            
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // invoke test.
-            // SUXEX
-            MenuManager.Instance.MenuSet[new IntPtr(0x004D10EA)][5].Descendents[5].invoke();
         }
 
         private void tbInput_KeyDown(object sender, KeyEventArgs e)
