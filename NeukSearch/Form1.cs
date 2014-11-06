@@ -26,7 +26,7 @@ namespace NeukSearch
             mng = MenuManager.Instance;
 
 
-            if (!MenuCrawler.crawl(new IntPtr(0x002B0B72)))
+            if (!MenuCrawler.crawl(new IntPtr(0x00261B7E)))
             {
                 MessageBox.Show("메뉴 없음");
             }
@@ -51,7 +51,7 @@ namespace NeukSearch
         {
             // invoke test.
             // SUXEX
-            MenuManager.Instance.MenuSet[new IntPtr(0x002B0B72)][5].Descendents[5].invoke();
+            MenuManager.Instance.MenuSet[new IntPtr(0x00261B7E)][5].Descendents[5].invoke();
         }
     }
 }
