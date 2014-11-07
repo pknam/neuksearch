@@ -26,6 +26,7 @@ namespace NeukSearch
             //obj["ProcessId"] == process id
             //obj["CommandLine"] == 응용프로그램 full path
             //응용프로그램 이름으로 sqlite3에서 select한 뒤 menu가 올라가있는 인스턴스 불러와서 load
+            //menu가 들어있는 singleton불러와서 쓰면됨
         }
     }
 }
