@@ -10,3 +10,7 @@ C:\Users\pknam\CloudStation\sources\cs\NeukSearch\NeukSearch\obj\Debug\NeukSearc
 C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\bin\Debug\NeukSearch.exe.config
 C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.exe
 C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.pdb
+C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.csprojResolveAssemblyReference.cache
+C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.Form1.resources
+C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.Properties.Resources.resources
+C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.csproj.GenerateResource.Cache
