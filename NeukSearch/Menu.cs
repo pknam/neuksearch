@@ -50,5 +50,20 @@ namespace NeukSearch
             settingMenuInvoke.Invoke();
         }
 
+        // listbox에서 뽑아가는 값
+        public override string ToString()
+        {
+            Menu tmpMenu = Parent;
+            string line = Name;
+
+            while (tmpMenu != null)
+            {
+                line = tmpMenu.Name + " → " + line;
+
+                tmpMenu = tmpMenu.Parent;
+            }
+
+            return line;
+        }
     }
 }

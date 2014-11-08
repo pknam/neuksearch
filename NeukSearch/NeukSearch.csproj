@@ -55,6 +55,8 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Menu.cs" />
+    <Compile Include="MenuCrawler.cs" />
+    <Compile Include="MenuExplorer.cs" />
     <Compile Include="MenuManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

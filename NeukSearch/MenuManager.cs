@@ -45,9 +45,9 @@ namespace NeukSearch
         
         
 
-        public List<string> search(string input)
+        public List<Menu> search(string input)
         {
-            List<string> result = new List<string>();
+            List<Menu> result = new List<Menu>();
             Stack<Menu> s = new Stack<Menu>();
 
 
@@ -64,31 +64,7 @@ namespace NeukSearch
 
                     if (tmpMenu.Name.ToLower().Contains(input))
                     {
-                        string path = tmpMenu.Name;
-
-
-                        // parent 탐색용
-                        Menu t = tmpMenu;
-
-                        while (t.Parent != null)
-                        {
-                            t = t.Parent;
-
-                            if (t.Parent != null)
-                                path = " -> " + t.Name + " -> " + path;
-                            else
-                                path = t.Name + " -> " + path;
-                        }
-
-                        foreach (var node in tmpMenu.Route)
-                        {
-                            path += ", " + node;
-                        }
-
-
-
-                        result.Add(path);
-
+                        result.Add(tmpMenu);
                     }
 
                     if (tmpMenu.Descendents != null)
