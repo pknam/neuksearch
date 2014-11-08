@@ -23,10 +23,10 @@ namespace NeukSearch
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            mng = new MenuManager();
+            mng = MenuManager.Instance;
 
-            
-            if ( !mng.crawl(new IntPtr(0x000C0CBE)) )
+
+            if (!MenuCrawler.crawl(new IntPtr(0x004D10EA)))
             {
                 MessageBox.Show("메뉴 없음");
             }
@@ -35,16 +35,32 @@ namespace NeukSearch
 
         private void tbInput_TextChanged(object sender, EventArgs e)
         {
-            List<string> searchResult = mng.search(tbInput.Text);
+            List<Menu> searchResult = mng.search(tbInput.Text);
 
-            string str = "";
 
-            foreach (string s in searchResult)
+            listBox1.DataSource = searchResult;
+        }
+
+        private void tbInput_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            switch(e.KeyCode)
             {
-                str += s + "\r\n";
-            }
+                case Keys.Down:
+                    if (listBox1.SelectedIndex < listBox1.Items.Count - 1)
+                        listBox1.SetSelected(listBox1.SelectedIndex + 1, true);
+                    break;
 
-            tbResult.Text = str;
+                case Keys.Up:
+                    if (listBox1.SelectedIndex > 0)
+                        listBox1.SetSelected(listBox1.SelectedIndex - 1, true);
+                    break;
+
+                case Keys.Enter:
+                    Menu selected = listBox1.SelectedItem as Menu;
+                    selected.invoke();
+                    break;
+            }
         }
     }
 }
