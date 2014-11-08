@@ -9,38 +9,18 @@ namespace NeukSearch
     using System.Management;
     class ProcessOpenEvent
     {
-        private static ProcessOpenEvent instance;
         private ManagementEventWatcher mProcessWatcher;
 
-        private ProcessOpenEvent()
+        public ProcessOpenEvent()
         {
             WqlEventQuery query = new WqlEventQuery("Select * From __InstanceCreationEvent Within 2 Where TargetInstance Isa 'Win32_Process'");
             mProcessWatcher = new ManagementEventWatcher(query);
             mProcessWatcher.EventArrived += new EventArrivedEventHandler(watcher_EventArrived);
         }
 
-        public static ProcessOpenEvent _instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new ProcessOpenEvent();
-                }
-
-                return instance;
-            }
-        }
-
-        public void run()
-        {
-            mProcessWatcher.Start();
-        }
-
         public void watcher_EventArrived(object sender, EventArrivedEventArgs e)
         {
             ManagementBaseObject obj = (ManagementBaseObject)e.NewEvent["TargetInstance"];
-            System.Windows.Forms.MessageBox.Show(obj["CommandLine"].ToString());
             //TODO
             //obj["Name"] == 응용프로그램 이름
             //obj["ProcessId"] == process id
