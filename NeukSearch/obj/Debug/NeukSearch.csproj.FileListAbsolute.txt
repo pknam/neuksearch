@@ -14,3 +14,22 @@ C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\
 C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.Form1.resources
 C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.Properties.Resources.resources
 C:\Users\석준\Documents\Visual Studio 2013\Projects\neukSearch\NeukSearch\obj\Debug\NeukSearch.csproj.GenerateResource.Cache
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\NeukSearch.exe.config
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\obj\Debug\NeukSearch.csprojResolveAssemblyReference.cache
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\obj\Debug\NeukSearch.Form1.resources
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\obj\Debug\NeukSearch.Properties.Resources.resources
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\obj\Debug\NeukSearch.csproj.GenerateResource.Cache
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\NeukSearch.exe
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\NeukSearch.pdb
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\EntityFramework.dll
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\Newtonsoft.Json.dll
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\System.Data.SQLite.dll
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\EntityFramework.xml
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\Newtonsoft.Json.xml
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\bin\Debug\System.Data.SQLite.xml
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\obj\Debug\NeukSearch.exe
+C:\Users\pknam\Google 드라이브\sources\cs\NeukSearch__\neuksearch\NeukSearch\obj\Debug\NeukSearch.pdb
