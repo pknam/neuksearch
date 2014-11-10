@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
+using System.Drawing;
 
 namespace NeukSearch
 {
@@ -17,6 +18,8 @@ namespace NeukSearch
     class Menu
     {
         public IntPtr hwnd { get; set; }
+        public Icon icon { get; set; }          // json으로 변환할 때 이건 빼도 됨
+        public string exePath { get; set; }     // json->menu 변환할 때 이걸로 icon구해서 집어넣기
         public string Name { get; set; }
         public Menu Parent { get; set; }
         public List<Menu> Descendents { get; set; }

@@ -50,7 +50,7 @@ namespace NeukSearch
 
 
 
-            if (MenuCrawler.crawl(hwnd))
+            if (MenuCrawler.crawl(hwnd, exePath))
             {
                 MessageBox.Show("add");
             }
@@ -94,6 +94,8 @@ namespace NeukSearch
                 {
                     return process.MainWindowHandle;
                 }
+
+                
             }
 
             return new IntPtr(0);
