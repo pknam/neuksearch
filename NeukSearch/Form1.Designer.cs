@@ -53,12 +53,14 @@
             // 
             // listBox1
             // 
+            this.listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 12;
             this.listBox1.Location = new System.Drawing.Point(68, 65);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(467, 352);
             this.listBox1.TabIndex = 5;
+            this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
             // 
             // Form1
             // 

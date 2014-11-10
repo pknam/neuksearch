@@ -25,6 +25,8 @@ namespace NeukSearch
         {
             ProcessOpenEvent._instance.run();
             mng = MenuManager.Instance;
+
+
         }
 
         private void tbInput_TextChanged(object sender, EventArgs e)
@@ -65,6 +67,23 @@ namespace NeukSearch
                     }
                     break;
             }
+        }
+
+        private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            
+
+            Rectangle imageRect = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Height, e.Bounds.Height);
+            Rectangle stringRect = new Rectangle(e.Bounds.X + 20, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height);
+
+            e.Graphics.DrawIcon(((Menu)listBox1.Items[e.Index]).icon, imageRect);
+            e.Graphics.DrawString(listBox1.Items[e.Index].ToString(),
+                e.Font, Brushes.Black, stringRect, StringFormat.GenericDefault);
+
+            e.DrawFocusRectangle();
         }
     }
 }
