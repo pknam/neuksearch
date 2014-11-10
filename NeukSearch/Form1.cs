@@ -26,7 +26,7 @@ namespace NeukSearch
             mng = MenuManager.Instance;
 
 
-            if (!MenuCrawler.crawl(new IntPtr(0x004D10EA)))
+            if (!MenuCrawler.crawl(new IntPtr(0x00050E5A)))
             {
                 MessageBox.Show("메뉴 없음");
             }
