@@ -59,6 +59,10 @@ namespace NeukSearch
             { // 비활성화된 menu일 때
                 return false;
             }
+            catch(InvalidOperationException)
+            {// expandable menu일 때
+                return false;
+            }
 
             return true;
         }
