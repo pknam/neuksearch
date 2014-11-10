@@ -25,13 +25,6 @@ namespace NeukSearch
         {
             ProcessOpenEvent._instance.run();
             mng = MenuManager.Instance;
-
-
-            if (!MenuCrawler.crawl(new IntPtr(0x002308B4)))
-            {
-                MessageBox.Show("메뉴 없음");
-            }
-
         }
 
         private void tbInput_TextChanged(object sender, EventArgs e)
