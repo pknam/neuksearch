@@ -58,7 +58,7 @@ namespace NeukSearch
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, mSQLiteConn);
-                command.ExecuteNonQueryAsync();
+                command.ExecuteNonQuery();
             }
             catch (SQLiteException ex)
             {

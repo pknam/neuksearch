@@ -29,7 +29,7 @@ namespace NeukSearch
                 // expand가 불가능한 경우 exception
                 fileECPat.Expand();
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 return false;
             }

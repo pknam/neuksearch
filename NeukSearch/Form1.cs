@@ -23,13 +23,9 @@ namespace NeukSearch
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ProcessOpenEvent._instance.run();
             mng = MenuManager.Instance;
 
-
-            if (!MenuCrawler.crawl(new IntPtr(0x00050E5A)))
-            {
-                MessageBox.Show("메뉴 없음");
-            }
 
         }
 
@@ -58,9 +54,36 @@ namespace NeukSearch
 
                 case Keys.Enter:
                     Menu selected = listBox1.SelectedItem as Menu;
-                    selected.invoke();
+
+                    // 클릭했는데 비활성화된 menu일 때
+                    if(!selected.invoke())
+                    {
+                        // beep sound
+                        System.Media.SystemSounds.Beep.Play();
+
+                        // 검색 폼 활성화
+                        this.Activate();
+                        tbInput.Focus();
+                    }
                     break;
             }
+        }
+
+        private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            
+
+            Rectangle imageRect = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Height, e.Bounds.Height);
+            Rectangle stringRect = new Rectangle(e.Bounds.X + 20, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height);
+
+            e.Graphics.DrawIcon(((Menu)listBox1.Items[e.Index]).icon, imageRect);
+            e.Graphics.DrawString(listBox1.Items[e.Index].ToString(),
+                e.Font, Brushes.Black, stringRect, StringFormat.GenericDefault);
+
+            e.DrawFocusRectangle();
         }
     }
 }

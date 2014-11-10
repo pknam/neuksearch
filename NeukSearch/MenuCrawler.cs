@@ -4,21 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
+using System.Drawing;
 
 namespace NeukSearch
 {
     class MenuCrawler
     {
 
-        public static bool crawl(IntPtr hwnd)
+        public static bool crawl(IntPtr hwnd, string exePath)
         {
+            Icon icon = null;// Icon.ExtractAssociatedIcon(exePath);
             AutomationElementCollection menus = MenuExplorer.getRootMenus(hwnd);
 
             // menu가 없는 window는 return false
             if (menus == null)
                 return false;
 
-            List<Menu> menulist = crawlMenus(menus, null, hwnd);
+
+            // crawlMenus 재귀호출때마다 icon부르면 비효율적이라
+            // 여기서 미리 icon 구해서 넘김
+            List<Menu> menulist = crawlMenus(menus, null, hwnd, exePath, icon);
 
 
             
@@ -29,7 +34,7 @@ namespace NeukSearch
 
 
         // recursive function
-        private static List<Menu> crawlMenus(AutomationElementCollection menus, Menu parent, IntPtr hwnd)
+        private static List<Menu> crawlMenus(AutomationElementCollection menus, Menu parent, IntPtr hwnd, string exePath, Icon icon)
         {
             List<Menu> menuList = new List<Menu>();
             int i = 0;
@@ -42,6 +47,8 @@ namespace NeukSearch
                 tmpMenu.Parent = parent;
                 tmpMenu.Route = new List<int>();
                 tmpMenu.hwnd = hwnd;
+                tmpMenu.exePath = exePath;
+                tmpMenu.icon = icon;
 
                 if (parent != null)
                     tmpMenu.Route.AddRange(parent.Route);
@@ -54,7 +61,7 @@ namespace NeukSearch
                     AutomationElementCollection submenus = MenuExplorer.getSubMenus(menu);
 
                     tmpMenu.Attr = MenuAttr.ExpandableMenu;
-                    tmpMenu.Descendents = crawlMenus(submenus, tmpMenu, hwnd);
+                    tmpMenu.Descendents = crawlMenus(submenus, tmpMenu, hwnd, exePath, icon);
 
                     MenuExplorer.collapseMenu(menu);
                 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
+using System.Drawing;
 
 namespace NeukSearch
 {
@@ -17,6 +18,8 @@ namespace NeukSearch
     class Menu
     {
         public IntPtr hwnd { get; set; }
+        public Icon icon { get; set; }          // json으로 변환할 때 이건 빼도 됨
+        public string exePath { get; set; }     // json->menu 변환할 때 이걸로 icon구해서 집어넣기
         public string Name { get; set; }
         public Menu Parent { get; set; }
         public List<Menu> Descendents { get; set; }
@@ -32,7 +35,7 @@ namespace NeukSearch
             this.Attr = expandable;
         }
 
-        public void invoke()
+        public bool invoke()
         {
             AutomationElementCollection menus = MenuExplorer.getRootMenus(hwnd);
 
@@ -47,7 +50,17 @@ namespace NeukSearch
             AutomationElement targetMenu = menus[Route[Route.Count - 1]];
 
             InvokePattern settingMenuInvoke = targetMenu.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
-            settingMenuInvoke.Invoke();
+            
+            try
+            {
+                settingMenuInvoke.Invoke();
+            }
+            catch(ElementNotEnabledException)
+            { // 비활성화된 menu일 때
+                return false;
+            }
+
+            return true;
         }
 
         // listbox에서 뽑아가는 값
