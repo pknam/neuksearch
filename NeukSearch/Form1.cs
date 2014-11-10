@@ -74,7 +74,7 @@ namespace NeukSearch
             if (e.Index < 0)
                 return;
 
-            
+            e.DrawBackground();
 
             Rectangle imageRect = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Height, e.Bounds.Height);
             Rectangle stringRect = new Rectangle(e.Bounds.X + 20, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height);
