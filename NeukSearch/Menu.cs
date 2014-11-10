@@ -32,7 +32,7 @@ namespace NeukSearch
             this.Attr = expandable;
         }
 
-        public void invoke()
+        public bool invoke()
         {
             AutomationElementCollection menus = MenuExplorer.getRootMenus(hwnd);
 
@@ -47,7 +47,17 @@ namespace NeukSearch
             AutomationElement targetMenu = menus[Route[Route.Count - 1]];
 
             InvokePattern settingMenuInvoke = targetMenu.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
-            settingMenuInvoke.Invoke();
+            
+            try
+            {
+                settingMenuInvoke.Invoke();
+            }
+            catch(ElementNotEnabledException)
+            { // 비활성화된 menu일 때
+                return false;
+            }
+
+            return true;
         }
 
         // listbox에서 뽑아가는 값

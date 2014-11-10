@@ -52,7 +52,17 @@ namespace NeukSearch
 
                 case Keys.Enter:
                     Menu selected = listBox1.SelectedItem as Menu;
-                    selected.invoke();
+
+                    // 클릭했는데 비활성화된 menu일 때
+                    if(!selected.invoke())
+                    {
+                        // beep sound
+                        System.Media.SystemSounds.Beep.Play();
+
+                        // 검색 폼 활성화
+                        this.Activate();
+                        tbInput.Focus();
+                    }
                     break;
             }
         }
