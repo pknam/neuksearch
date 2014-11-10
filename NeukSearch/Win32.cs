@@ -9,10 +9,10 @@ namespace NeukSearch
 {
     class Win32
     {
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetForegroundWindow();
+        [DllImport("user32.dll", SetLastError=true)]
+        static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
 
-
+        
     }
 }

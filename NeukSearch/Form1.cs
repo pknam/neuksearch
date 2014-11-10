@@ -23,10 +23,11 @@ namespace NeukSearch
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ProcessOpenEvent._instance.run();
             mng = MenuManager.Instance;
 
 
-            if (!MenuCrawler.crawl(new IntPtr(0x004D10EA)))
+            if (!MenuCrawler.crawl(new IntPtr(0x002308B4)))
             {
                 MessageBox.Show("메뉴 없음");
             }
