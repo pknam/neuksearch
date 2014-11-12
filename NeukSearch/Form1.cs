@@ -92,6 +92,9 @@ namespace NeukSearch
                     break;
 
                 case Keys.Enter:
+                    if (listBox1.SelectedIndex < 0)
+                        break;
+
                     Menu selected = listBox1.SelectedItem as Menu;
 
                     // 메뉴 클릭 실패시
@@ -104,6 +107,9 @@ namespace NeukSearch
                         this.Activate();
                         tbInput.Focus();
                     }
+                    else
+                        e.Handled = true;
+
                     break;
             }
         }
