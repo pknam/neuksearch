@@ -11,25 +11,30 @@ namespace NeukSearch
     class MenuCrawler
     {
 
-        public static bool crawl(IntPtr hwnd, string exePath)
+        public static List<Menu> crawl(IntPtr hwnd, string exePath)
         {
-            Icon icon = null;// Icon.ExtractAssociatedIcon(exePath);
+            Icon icon;
+            try
+            {
+                icon = Icon.ExtractAssociatedIcon(exePath);
+            }
+            catch (Exception ex)
+            {
+                icon = Icon.ExtractAssociatedIcon("");
+            }
             AutomationElementCollection menus = MenuExplorer.getRootMenus(hwnd);
 
             // menu가 없는 window는 return false
             if (menus == null)
-                return false;
+                return null;
 
 
             // crawlMenus 재귀호출때마다 icon부르면 비효율적이라
             // 여기서 미리 icon 구해서 넘김
             List<Menu> menulist = crawlMenus(menus, null, hwnd, exePath, icon);
-
-
-            
             MenuManager.Instance.MenuSet.Add(hwnd, menulist);
 
-            return true;
+            return menulist;
         }
 
 
