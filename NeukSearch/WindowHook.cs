@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace NeukSearch
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Runtime.InteropServices;
-    using System.Threading;
+
 
     /// <summary>
     /// stores data about the raised event
@@ -36,6 +35,8 @@ namespace NeukSearch
     /// </summary>
     public class WindowHookNet
     {
+
+
         #region delegates
         /// <summary>
         /// use this to get informed about window creation / destruction events
@@ -127,22 +128,9 @@ namespace NeukSearch
         private bool iRun = false;
 
         #region DLLImport
-        [DllImport("user32.dll", EntryPoint = "EnumDesktopWindows",
-            ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("user32.dll", EntryPoint = "EnumDesktopWindows", ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
         private static extern bool _EnumDesktopWindows(IntPtr hDesktop,
         EnumDelegate lpEnumCallbackFunction, IntPtr lParam);
-
-        [DllImport("user32.dll", EntryPoint = "GetWindowText",
-            ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern int _GetWindowText(IntPtr hWnd,
-        StringBuilder lpWindowText, int nMaxCount);
-
-
-        // GetClassName
-        [DllImport("user32.dll", EntryPoint = "GetClassName", ExactSpelling = false,
-            CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern int _GetClassName(IntPtr hwnd, StringBuilder lpClassName,
-            int nMaxCount);
         #endregion
 
         #region properties
@@ -268,6 +256,8 @@ namespace NeukSearch
             tArgument.Handle = hWnd;
             tArgument.WindowTitle = GetWindowText(hWnd);
             tArgument.WindowClass = GetClassName(hWnd);
+            tArgument.ExecutablePath = GetExecutablePath(hWnd);
+            tArgument.ProcessId = GetProcessId(hWnd);
 
             iNewWindowList.Add(tArgument.Handle, tArgument);
             return true;
@@ -281,7 +271,7 @@ namespace NeukSearch
         public static string GetWindowText(IntPtr hWnd)
         {
             StringBuilder title = new StringBuilder(MAXTITLE);
-            int titleLength = _GetWindowText(hWnd, title, title.Capacity + 1);
+            int titleLength = Win32._GetWindowText(hWnd, title, title.Capacity + 1);
             title.Length = titleLength;
 
             return title.ToString();
@@ -290,10 +280,30 @@ namespace NeukSearch
         public static string GetClassName(IntPtr hWnd)
         {
             StringBuilder title = new StringBuilder(MAXTITLE);
-            int titleLength = _GetClassName(hWnd, title, title.Capacity + 1);
+            int titleLength = Win32._GetClassName(hWnd, title, title.Capacity + 1);
             title.Length = titleLength;
 
             return title.ToString();
+        }
+
+        public static string GetExecutablePath(IntPtr hWnd)
+        {
+            uint id = GetProcessId(hWnd);
+            int capacity = 255;
+
+            Process process_by_id = Process.GetProcessById((int)id);
+            IntPtr process = Win32.OpenProcess(process_by_id, Win32.ProcessAccessFlags.All);
+            StringBuilder builder = new StringBuilder(capacity);
+            Win32.QueryFullProcessImageName(process, 0, builder, ref capacity);
+
+            return builder.ToString();
+        }
+
+        public static uint GetProcessId(IntPtr hWnd)
+        {
+            uint id;
+            Win32.GetWindowThreadProcessId(hWnd, out id);
+            return id;
         }
         #endregion
 
