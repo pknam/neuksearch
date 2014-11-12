@@ -53,18 +53,24 @@ namespace NeukSearch
                     break;
 
                 case Keys.Enter:
+                    if (listBox1.SelectedIndex < 0)
+                        break;
+
                     Menu selected = listBox1.SelectedItem as Menu;
 
-                    // 클릭했는데 비활성화된 menu일 때
+                    // 메뉴 클릭 실패시
                     if(!selected.invoke())
                     {
                         // beep sound
-                        System.Media.SystemSounds.Beep.Play();
+                        //System.Media.SystemSounds.Beep.Play();
 
                         // 검색 폼 활성화
                         this.Activate();
                         tbInput.Focus();
                     }
+                    else
+                        e.Handled = true;
+
                     break;
             }
         }
