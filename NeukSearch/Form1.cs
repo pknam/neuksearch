@@ -26,6 +26,7 @@ namespace NeukSearch
         private void Form1_Load(object sender, EventArgs e)
         {
             //ProcessOpenEvent._instance.run();
+
             WindowHookNet windowhook = WindowHookNet.Instance;
             windowhook.WindowCreated += windowhook_WindowCreated;
             mng = MenuManager.Instance;
@@ -43,8 +44,6 @@ namespace NeukSearch
                 {
                     return process.MainWindowHandle;
                 }
-
-
             }
 
             return IntPtr.Zero;
@@ -52,20 +51,28 @@ namespace NeukSearch
 
         async void windowhook_WindowCreated(object aSender, WindowHookEventArgs aArgs)
         {
+            OverlayForm overlay = new OverlayForm();
             MenuSqliteHelper sqlite = MenuSqliteHelper._instance;
             var reader = await sqlite.GetMenuDataByPath(aArgs.ExecutablePath);
             if (!reader.HasRows)
             {
-                Win32.ShowWindow(aArgs.Handle, Win32.ShowWindowCommands.SW_RESTORE);
-                //데이터 없는경우
-                List<Menu> menulist = MenuCrawler.crawl(aArgs.Handle, aArgs.ExecutablePath);
-                if (menulist != null)
+                AutomationElementCollection menus = MenuExplorer.getRootMenus(aArgs.Handle);
+                if (menus != null)
                 {
-                    MenuSqliteHelper._instance.SetMenuData(menulist);
-                }
-                else
-                {
-                    //MessageBox.Show("no menu");
+                    overlay.Show();
+                    //Win32.ShowWindow(aArgs.Handle, Win32.ShowWindowCommands.SW_RESTORE);
+                    //데이터 없는경우
+                    List<Menu> menulist = MenuCrawler.crawl(aArgs.Handle, aArgs.ExecutablePath);
+                    overlay.Close();
+
+                    if (menulist != null)
+                    {
+                        MenuSqliteHelper._instance.SetMenuData(menulist);
+                    }
+                    else
+                    {
+                        //MessageBox.Show("no menu");
+                    }
                 }
             } else {
                 //데이터 있는경우
