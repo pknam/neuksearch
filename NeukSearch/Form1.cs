@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Windows.Forms;
 
+using Newtonsoft.Json;
+
 namespace NeukSearch
 {
     public partial class Form1 : Form
@@ -45,27 +47,30 @@ namespace NeukSearch
 
             }
 
-            return new IntPtr(0);
+            return IntPtr.Zero;
         }
 
-        void windowhook_WindowCreated(object aSender, WindowHookEventArgs aArgs)
+        async void windowhook_WindowCreated(object aSender, WindowHookEventArgs aArgs)
         {
-            //string exePath = obj["ExecutablePath"].ToString();
-            //int pid = int.Parse(obj["ProcessId"].ToString());
-
-            IntPtr hwnd = aArgs.Handle;//Pid2Hwnd(pid);
-
-
-
-
-            if (MenuCrawler.crawl(hwnd, ""))
+            MenuSqliteHelper sqlite = MenuSqliteHelper._instance;
+            var reader = await sqlite.GetMenuDataByPath(aArgs.ExecutablePath);
+            if (!reader.HasRows)
             {
-                MessageBox.Show("add");
+                Win32.ShowWindow(aArgs.Handle, Win32.ShowWindowCommands.SW_RESTORE);
+                //데이터 없는경우
+                List<Menu> menulist = MenuCrawler.crawl(aArgs.Handle, aArgs.ExecutablePath);
+                if (menulist != null)
+                {
+                    MenuSqliteHelper._instance.SetMenuData(menulist);
+                }
+                else
+                {
+                    //MessageBox.Show("no menu");
+                }
+            } else {
+                //데이터 있는경우
+                //List<Menu> test = JsonConvert.DeserializeObject<List<Menu>>(Util.Base64Decode(reader["info"].ToString()));
             }
-            //else
-            //{
-            //    MessageBox.Show("no menu");
-            //}
         }
 
         private void tbInput_TextChanged(object sender, EventArgs e)
