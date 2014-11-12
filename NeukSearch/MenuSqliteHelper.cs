@@ -51,14 +51,13 @@ namespace NeukSearch
         private bool CreateTable()
         {
             string query = @"CREATE TABLE menu_info(
-                            uid int primary key auto_increment, 
+                            uid INTEGER primary key AUTOINCREMENT, 
                             info text, 
-                            file_path text, 
-                            file_name text)";
+                            file_path text)";
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, mSQLiteConn);
-                command.ExecuteNonQueryAsync();
+                command.ExecuteNonQuery();
             }
             catch (SQLiteException ex)
             {
@@ -69,45 +68,49 @@ namespace NeukSearch
             return true;
         }
 
-        public async Task<string> GetMenuDataByName(string file_name)
+        public async Task<System.Data.Common.DbDataReader> GetMenuDataByPath(string file_path)
         {
-            string query = String.Format("SELECT * FROM menu_info WHERE {0}", file_name);
+            string query = String.Format("SELECT * FROM menu_info WHERE file_path = \"{0}\"", file_path);
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, mSQLiteConn);
                 var reader = await command.ExecuteReaderAsync();
 
-                return reader["info"].ToString();
+                //if (reader.HasRows)
+                //    return true;
+                //else return false;
+                return reader;
             }
             catch (SQLiteException ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
+                //return false;
                 return null;
             }
         }
 
-        public async Task<string> GetMenuDataByPath(string file_path)
+        public bool SetMenuData(List<Menu> data)
         {
-            string query = String.Format("SELECT * FROM menu_info WHERE {0}", file_path);
+            string json = JsonConvert.SerializeObject(data, Formatting.None, 
+                new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+
             try
             {
+                string query = "INSERT INTO menu_info(info, file_path) VALUES(\"" + Util.Base64Encode(json) + "\", \"" + data[0].exePath + "\")";
                 SQLiteCommand command = new SQLiteCommand(query, mSQLiteConn);
-                var reader = await command.ExecuteReaderAsync();
+                command.ExecuteNonQuery();
 
-                return reader["info"].ToString();
+                return true;
             }
             catch (SQLiteException ex)
             {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
-                return null;
+                return false;
             }
         }
 
-        public bool SetMenuData(Menu data)
-        {
-            string json = JsonConvert.SerializeObject(data);
-            string query = @"";
-            return true;
-        }
+
     }
 }
