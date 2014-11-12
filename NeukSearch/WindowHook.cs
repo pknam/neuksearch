@@ -20,6 +20,8 @@ namespace NeukSearch
         public IntPtr Handle = IntPtr.Zero;
         public string WindowTitle = null;
         public string WindowClass = null;
+        public string ExecutablePath = null;
+        public uint ProcessId = 0;
 
         public override string ToString()
         {
