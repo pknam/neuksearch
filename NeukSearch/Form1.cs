@@ -10,6 +10,7 @@ using System.Windows.Automation;
 using System.Windows.Forms;
 
 using Newtonsoft.Json;
+using System.Data.SQLite;
 
 namespace NeukSearch
 {
@@ -26,14 +27,8 @@ namespace NeukSearch
         private void Form1_Load(object sender, EventArgs e)
         {
             //ProcessOpenEvent._instance.run();
-<<<<<<< HEAD
-
             WindowHookNet windowhook = WindowHookNet.Instance;
             windowhook.WindowCreated += windowhook_WindowCreated;
-=======
-            //WindowHookNet windowhook = WindowHookNet.Instance;
-            //windowhook.WindowCreated += windowhook_WindowCreated;
->>>>>>> 2f9758c9ffd1bc299f107c0d5eacddb0061260ad
             mng = MenuManager.Instance;
 
             
@@ -55,18 +50,19 @@ namespace NeukSearch
             return IntPtr.Zero;
         }
 
-        async void windowhook_WindowCreated(object aSender, WindowHookEventArgs aArgs)
+        void windowhook_WindowCreated(object aSender, WindowHookEventArgs aArgs)
         {
             OverlayForm overlay = new OverlayForm();
             MenuSqliteHelper sqlite = MenuSqliteHelper._instance;
-            var reader = await sqlite.GetMenuDataByPath(aArgs.ExecutablePath);
+            //var reader = await sqlite.GetMenuDataByPath(aArgs.ExecutablePath);
+            SQLiteDataReader reader = sqlite.GetMenuDataByPath(aArgs.ExecutablePath);
             if (!reader.HasRows)
             {
                 AutomationElementCollection menus = MenuExplorer.getRootMenus(aArgs.Handle);
                 if (menus != null)
                 {
                     overlay.Show();
-                    //Win32.ShowWindow(aArgs.Handle, Win32.ShowWindowCommands.SW_RESTORE);
+                    Win32.ShowWindow(aArgs.Handle, Win32.ShowWindowCommands.SW_RESTORE);
                     //데이터 없는경우
                     List<Menu> menulist = MenuCrawler.crawl(aArgs.Handle, aArgs.ExecutablePath);
                     overlay.Close();
@@ -82,7 +78,12 @@ namespace NeukSearch
                 }
             } else {
                 //데이터 있는경우
-                //List<Menu> test = JsonConvert.DeserializeObject<List<Menu>>(Util.Base64Decode(reader["info"].ToString()));
+                DataTable table = new DataTable();
+                table.Load(reader);
+
+                //MessageBox.Show(reader.GetValue(1).ToString());
+                List<Menu> json_menulist = JsonUtil.Json2MenuList(Util.Base64Decode(table.Rows[0][1].ToString()), aArgs.Handle);
+                MenuManager.Instance.MenuSet.Add(aArgs.Handle, json_menulist);
             }
         }
 

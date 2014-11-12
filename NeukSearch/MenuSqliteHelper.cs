@@ -61,20 +61,20 @@ namespace NeukSearch
             }
             catch (SQLiteException ex)
             {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
                 return false;
             }
 
             return true;
         }
 
-        public async Task<System.Data.Common.DbDataReader> GetMenuDataByPath(string file_path)
+        public SQLiteDataReader GetMenuDataByPath(string file_path)
         {
             string query = String.Format("SELECT * FROM menu_info WHERE file_path = \"{0}\"", file_path);
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, mSQLiteConn);
-                var reader = await command.ExecuteReaderAsync();
+                //var reader = await command.ExecuteReaderAsync();
+                SQLiteDataReader reader = command.ExecuteReader();
 
                 //if (reader.HasRows)
                 //    return true;
