@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+///deprecated
 namespace NeukSearch
 {
     using System.Management;
@@ -50,14 +52,14 @@ namespace NeukSearch
 
 
 
-            if (MenuCrawler.crawl(hwnd, exePath))
-            {
-                MessageBox.Show("add");
-            }
-            else
-            {
-                MessageBox.Show("no menu");
-            }
+            //if (MenuCrawler.crawl(hwnd, exePath))
+            //{
+            //    MessageBox.Show("add");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("no menu");
+            //}
             
 
 
@@ -98,7 +100,7 @@ namespace NeukSearch
                 
             }
 
-            return new IntPtr(0);
+            return IntPtr.Zero;
         }
     }
 }
