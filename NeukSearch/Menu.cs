@@ -39,6 +39,20 @@ namespace NeukSearch
         {
             AutomationElementCollection menus = MenuExplorer.getRootMenus(hwnd);
 
+            // invalid hwnd일 때
+            // 윈도우가 닫혔을 때
+            if(menus == null)
+            {
+                // 목록에서 삭제
+                MenuManager.Instance.MenuSet.Remove(hwnd);
+                return false;
+            }
+
+            if(this.Attr == MenuAttr.ExpandableMenu)
+            {
+                return false;
+            }
+
             foreach(int i in Route.GetRange(0, Route.Count - 1))
             {
                 AutomationElement menu = menus[i];
@@ -49,18 +63,14 @@ namespace NeukSearch
 
             AutomationElement targetMenu = menus[Route[Route.Count - 1]];
 
-            InvokePattern settingMenuInvoke = targetMenu.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
             
             try
             {
+                InvokePattern settingMenuInvoke = targetMenu.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
                 settingMenuInvoke.Invoke();
             }
-            catch(ElementNotEnabledException)
-            { // 비활성화된 menu일 때
-                return false;
-            }
-            catch(InvalidOperationException)
-            {// expandable menu일 때
+            catch(Exception)
+            { // 비활성화된 menu일 때, expandable menu일 때
                 return false;
             }
 

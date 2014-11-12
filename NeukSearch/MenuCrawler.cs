@@ -13,7 +13,7 @@ namespace NeukSearch
 
         public static bool crawl(IntPtr hwnd, string exePath)
         {
-            Icon icon = Icon.ExtractAssociatedIcon(exePath);
+            Icon icon = null;// Icon.ExtractAssociatedIcon(exePath);
             AutomationElementCollection menus = MenuExplorer.getRootMenus(hwnd);
 
             // menu가 없는 window는 return false

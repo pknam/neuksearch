@@ -23,10 +23,49 @@ namespace NeukSearch
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ProcessOpenEvent._instance.run();
+            //ProcessOpenEvent._instance.run();
+            WindowHookNet windowhook = WindowHookNet.Instance;
+            windowhook.WindowCreated += windowhook_WindowCreated;
             mng = MenuManager.Instance;
 
 
+        }
+
+        private IntPtr Pid2Hwnd(int pid)
+        {
+            System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcesses();
+
+            foreach (var process in processes)
+            {
+                if (process.Id == pid)
+                {
+                    return process.MainWindowHandle;
+                }
+
+
+            }
+
+            return new IntPtr(0);
+        }
+
+        void windowhook_WindowCreated(object aSender, WindowHookEventArgs aArgs)
+        {
+            //string exePath = obj["ExecutablePath"].ToString();
+            //int pid = int.Parse(obj["ProcessId"].ToString());
+
+            IntPtr hwnd = aArgs.Handle;//Pid2Hwnd(pid);
+
+
+
+
+            if (MenuCrawler.crawl(hwnd, ""))
+            {
+                MessageBox.Show("add");
+            }
+            //else
+            //{
+            //    MessageBox.Show("no menu");
+            //}
         }
 
         private void tbInput_TextChanged(object sender, EventArgs e)
@@ -55,11 +94,11 @@ namespace NeukSearch
                 case Keys.Enter:
                     Menu selected = listBox1.SelectedItem as Menu;
 
-                    // 클릭했는데 비활성화된 menu일 때
+                    // 메뉴 클릭 실패시
                     if(!selected.invoke())
                     {
                         // beep sound
-                        System.Media.SystemSounds.Beep.Play();
+                        //System.Media.SystemSounds.Beep.Play();
 
                         // 검색 폼 활성화
                         this.Activate();
