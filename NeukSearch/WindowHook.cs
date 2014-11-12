@@ -33,9 +33,13 @@ namespace NeukSearch
     /// allows you to get information about the creation and /or the destruction of 
     /// windows
     /// </summary>
-    public class WindowHookNet
+    public class WindowHookNet : IDisposable
     {
-
+        public void Dispose()
+        {
+            this.iRun = false;
+            this.iThread.Abort();
+        }
 
         #region delegates
         /// <summary>

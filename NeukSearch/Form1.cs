@@ -77,13 +77,18 @@ namespace NeukSearch
                     }
                 }
             } else {
-                //데이터 있는경우
-                DataTable table = new DataTable();
-                table.Load(reader);
+                
+                AutomationElementCollection menus = MenuExplorer.getRootMenus(aArgs.Handle);
+                if (menus != null)
+                {
+                    //데이터 있는경우
+                    DataTable table = new DataTable();
+                    table.Load(reader);
 
-                //MessageBox.Show(reader.GetValue(1).ToString());
-                List<Menu> json_menulist = JsonUtil.Json2MenuList(Util.Base64Decode(table.Rows[0][1].ToString()), aArgs.Handle);
-                MenuManager.Instance.MenuSet.Add(aArgs.Handle, json_menulist);
+                    //MessageBox.Show(reader.GetValue(1).ToString());
+                    List<Menu> json_menulist = JsonUtil.Json2MenuList(Util.Base64Decode(table.Rows[0][1].ToString()), aArgs.Handle);
+                    MenuManager.Instance.MenuSet.Add(aArgs.Handle, json_menulist);
+                }
             }
         }
 
@@ -148,6 +153,17 @@ namespace NeukSearch
                 e.Font, Brushes.Black, stringRect, StringFormat.GenericDefault);
 
             e.DrawFocusRectangle();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            WindowHookNet hook = WindowHookNet.Instance;
+            hook.WindowCreated -= test;
+        }
+
+        private void test(object sender, WindowHookEventArgs args)
+        {
+            MessageBox.Show("close");
         }
     }
 }
