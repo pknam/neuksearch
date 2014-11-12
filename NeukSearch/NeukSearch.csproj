@@ -78,6 +78,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="JsonUtil.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuCrawler.cs" />
     <Compile Include="MenuExplorer.cs" />
