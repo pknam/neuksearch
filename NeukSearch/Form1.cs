@@ -24,10 +24,11 @@ namespace NeukSearch
         private void Form1_Load(object sender, EventArgs e)
         {
             //ProcessOpenEvent._instance.run();
-            WindowHookNet windowhook = WindowHookNet.Instance;
-            windowhook.WindowCreated += windowhook_WindowCreated;
+            //WindowHookNet windowhook = WindowHookNet.Instance;
+            //windowhook.WindowCreated += windowhook_WindowCreated;
             mng = MenuManager.Instance;
 
+            
 
         }
 
