@@ -77,7 +77,7 @@ namespace NeukSearch
                 {
                     Menu tmpMenu = s.Pop();
 
-                    if (tmpMenu.Name.ToLower().Contains(input))
+                    if (tmpMenu.Name.ToLower().Contains(input) && tmpMenu.Attr != MenuAttr.ExpandableMenu)
                     {
                         result.Add(tmpMenu);
                     }
