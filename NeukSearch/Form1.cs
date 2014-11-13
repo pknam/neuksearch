@@ -18,7 +18,6 @@ namespace NeukSearch
     {
         MenuManager mng;
 
-
         public Form1()
         {
             InitializeComponent();
@@ -27,12 +26,12 @@ namespace NeukSearch
         private void Form1_Load(object sender, EventArgs e)
         {
             //ProcessOpenEvent._instance.run();
+            mng = MenuManager.Instance;
+            mng.FormInstance = this;
+
             WindowHookNet windowhook = WindowHookNet.Instance;
             windowhook.WindowCreated += windowhook_WindowCreated;
-            mng = MenuManager.Instance;
-
-            
-
+            windowhook.WindowDestroyed += windowhook_WindowDestroy;
         }
 
         private IntPtr Pid2Hwnd(int pid)
@@ -50,16 +49,27 @@ namespace NeukSearch
             return IntPtr.Zero;
         }
 
+        void windowhook_WindowDestroy(object sender, WindowHookEventArgs aArgs)
+        {
+            if (mng.MenuSet.Keys.Contains(aArgs.Handle))
+            {
+                mng.MenuSet.Remove(aArgs.Handle);
+                this.refreshSearchResult();
+            }
+        }
+
         void windowhook_WindowCreated(object aSender, WindowHookEventArgs aArgs)
         {
             OverlayForm overlay = new OverlayForm();
             MenuSqliteHelper sqlite = MenuSqliteHelper._instance;
             //var reader = await sqlite.GetMenuDataByPath(aArgs.ExecutablePath);
-            SQLiteDataReader reader = sqlite.GetMenuDataByPath(aArgs.ExecutablePath);
-            if (!reader.HasRows)
+
+            AutomationElementCollection menus = MenuExplorer.getRootMenus(aArgs.Handle);
+
+            if (menus != null)
             {
-                AutomationElementCollection menus = MenuExplorer.getRootMenus(aArgs.Handle);
-                if (menus != null)
+                SQLiteDataReader reader = sqlite.GetMenuDataByPath(aArgs.ExecutablePath);
+                if (!reader.HasRows)
                 {
                     overlay.Show();
                     Win32.ShowWindow(aArgs.Handle, Win32.ShowWindowCommands.SW_RESTORE);
@@ -70,16 +80,14 @@ namespace NeukSearch
                     if (menulist != null)
                     {
                         MenuSqliteHelper._instance.SetMenuData(menulist);
+                        this.refreshSearchResult();
                     }
                     else
                     {
                         //MessageBox.Show("no menu");
                     }
                 }
-            } else {
-                
-                AutomationElementCollection menus = MenuExplorer.getRootMenus(aArgs.Handle);
-                if (menus != null)
+                else
                 {
                     //데이터 있는경우
                     DataTable table = new DataTable();
@@ -88,16 +96,20 @@ namespace NeukSearch
                     //MessageBox.Show(reader.GetValue(1).ToString());
                     List<Menu> json_menulist = JsonUtil.Json2MenuList(Util.Base64Decode(table.Rows[0][1].ToString()), aArgs.Handle);
                     MenuManager.Instance.MenuSet.Add(aArgs.Handle, json_menulist);
+                    this.refreshSearchResult();
                 }
             }
         }
 
-        private void tbInput_TextChanged(object sender, EventArgs e)
+        public void refreshSearchResult()
         {
             List<Menu> searchResult = mng.search(tbInput.Text);
-
-
             listBox1.DataSource = searchResult;
+        }
+
+        private void tbInput_TextChanged(object sender, EventArgs e)
+        {
+            this.refreshSearchResult();
         }
 
         private void tbInput_KeyDown(object sender, KeyEventArgs e)
@@ -158,12 +170,9 @@ namespace NeukSearch
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             WindowHookNet hook = WindowHookNet.Instance;
-            hook.WindowCreated -= test;
-        }
+            hook.WindowCreated -= windowhook_WindowCreated;
+            hook.WindowDestroyed -= windowhook_WindowDestroy;
 
-        private void test(object sender, WindowHookEventArgs args)
-        {
-            MessageBox.Show("close");
         }
     }
 }

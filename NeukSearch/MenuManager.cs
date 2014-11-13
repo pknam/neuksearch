@@ -24,8 +24,22 @@ namespace NeukSearch
         // val : menu list
         public Dictionary<IntPtr, List<Menu>> MenuSet { get; set; }
 
-        private static MenuManager _instance = null;
+        // main form instance
+        // form 생성시 넣어줘야 함
+        private Form1 _formInstance = null;
+        public Form1 FormInstance
+        {
+            get
+            {
+                return _formInstance;
+            }
+            set
+            {
+                this._formInstance = value;
+            }
+        }
 
+        private static MenuManager _instance = null;
 
         public static MenuManager Instance
         {
@@ -35,6 +49,7 @@ namespace NeukSearch
                 {
                     _instance = new MenuManager();
                     _instance.MenuSet = new Dictionary<IntPtr, List<Menu>>();
+                    _instance.FormInstance = null;
                 }
                 return _instance;
             }
