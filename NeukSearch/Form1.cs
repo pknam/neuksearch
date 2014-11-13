@@ -25,11 +25,6 @@ namespace NeukSearch
 
         private void Form1_Load(object sender, EventArgs e)
         {
-<<<<<<< HEAD
-            WindowHookNet windowhook = WindowHookNet.Instance;
-            windowhook.WindowCreated += windowhook_WindowCreated;
-            mng = MenuManager.Instance;
-=======
             //ProcessOpenEvent._instance.run();
             mng = MenuManager.Instance;
             mng.FormInstance = this;
@@ -37,7 +32,6 @@ namespace NeukSearch
             WindowHookNet windowhook = WindowHookNet.Instance;
             windowhook.WindowCreated += windowhook_WindowCreated;
             windowhook.WindowDestroyed += windowhook_WindowDestroy;
->>>>>>> 2ddc6e8ad190720f775bb516460d68924e713970
         }
 
         private IntPtr Pid2Hwnd(int pid)

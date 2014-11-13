@@ -297,26 +297,27 @@ namespace NeukSearch
         
         public static string GetExecutablePath(IntPtr hWnd)
         {
-            //var wmiQueryString = String.Format("SELECT ExecutablePath FROM Win32_Process WHERE Handle=\"{0}\"", hWnd);
-            //using (var searcher = new ManagementObjectSearcher(wmiQueryString))
-            //using (var results = searcher.Get())
-            //{
-            //    var query = from p in Process.GetProcesses()
-            //                join mo in results.Cast<ManagementObject>()
-            //                on p.Id equals (int)(uint)mo["ProcessId"]
-            //                select new
-            //                {
-            //                    Process = p,
-            //                    Path = (string)mo["ExecutablePath"],
-            //                    CommandLine = (string)mo["CommandLine"],
-            //                };
-
-            //    return null;
-            //}
-
             uint id = GetProcessId(hWnd);
 
-            Process process_by_id = Process.GetProcessById((int)id);
+            var wmiQueryString = String.Format("SELECT ExecutablePath FROM Win32_Process WHERE ProcessId={0}", id);
+            using (var searcher = new ManagementObjectSearcher(wmiQueryString))
+            {
+                using (var results = searcher.Get())
+                {
+                    if (results.Count != 0)
+                    {
+                        foreach (ManagementObject obj in results)
+                        {
+                            if (obj["ExecutablePath"] == null)
+                                return "";
+                            else
+                                return obj["ExecutablePath"].ToString();
+                        }
+                    }
+                }
+            }
+
+            return "";
             //string result;
 
             //try
@@ -328,19 +329,21 @@ namespace NeukSearch
             //    return "";
             //}
             //return result;
+            ///////////////////////////////
+            //uint id = GetProcessId(hWnd);
 
+            //Process process_by_id = Process.GetProcessById((int)id);
+            //int capacity = 255;
+            //IntPtr process = Win32.OpenProcess(process_by_id, Win32.ProcessAccessFlags.QueryLimitedInformation);
 
-            int capacity = 255;
-            IntPtr process = Win32.OpenProcess(process_by_id, Win32.ProcessAccessFlags.QueryLimitedInformation);
+            //if (process.Equals(IntPtr.Zero))
+            //    return null;
 
-            if (process.Equals(IntPtr.Zero))
-                return null;
+            //StringBuilder builder = new StringBuilder(capacity);
+            //Win32.QueryFullProcessImageName(process, 0, builder, ref capacity);
+            //Win32.CloseHandle(process);
 
-            StringBuilder builder = new StringBuilder(capacity);
-            Win32.QueryFullProcessImageName(process, 0, builder, ref capacity);
-            Win32.CloseHandle(process);
-
-            return builder.ToString();
+            //return builder.ToString();
         }
 
         public static uint GetProcessId(IntPtr hWnd)
