@@ -7,6 +7,8 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
+using System.Management;
+
 namespace NeukSearch
 {
 
@@ -254,7 +256,8 @@ namespace NeukSearch
         #region EnumWindowsProc
         private bool EnumWindowsProc(IntPtr hWnd, int lParam)
         {
-
+            //Process myProcess = Process.GetProcesses().Single(p => p.Id != 0 && p.Handle == hWnd);
+            
             WindowHookEventArgs tArgument = new WindowHookEventArgs();
 
             tArgument.Handle = hWnd;
@@ -289,9 +292,26 @@ namespace NeukSearch
 
             return title.ToString();
         }
-
+        
         public static string GetExecutablePath(IntPtr hWnd)
         {
+            //var wmiQueryString = String.Format("SELECT ExecutablePath FROM Win32_Process WHERE Handle=\"{0}\"", hWnd);
+            //using (var searcher = new ManagementObjectSearcher(wmiQueryString))
+            //using (var results = searcher.Get())
+            //{
+            //    var query = from p in Process.GetProcesses()
+            //                join mo in results.Cast<ManagementObject>()
+            //                on p.Id equals (int)(uint)mo["ProcessId"]
+            //                select new
+            //                {
+            //                    Process = p,
+            //                    Path = (string)mo["ExecutablePath"],
+            //                    CommandLine = (string)mo["CommandLine"],
+            //                };
+
+            //    return null;
+            //}
+
             uint id = GetProcessId(hWnd);
             int capacity = 255;
 

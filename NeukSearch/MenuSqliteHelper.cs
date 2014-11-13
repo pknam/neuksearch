@@ -18,7 +18,6 @@ namespace NeukSearch
 
         private static MenuSqliteHelper instance;
         private SQLiteConnection mSQLiteConn;
-        private String mDataSource;
 
         private MenuSqliteHelper() {
             string data = String.Format("DataSource={0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "test.db");
@@ -73,18 +72,12 @@ namespace NeukSearch
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, mSQLiteConn);
-                //var reader = await command.ExecuteReaderAsync();
                 SQLiteDataReader reader = command.ExecuteReader();
-
-                //if (reader.HasRows)
-                //    return true;
-                //else return false;
                 return reader;
             }
             catch (SQLiteException ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
-                //return false;
                 return null;
             }
         }
@@ -110,7 +103,5 @@ namespace NeukSearch
                 return false;
             }
         }
-
-
     }
 }

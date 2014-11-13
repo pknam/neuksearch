@@ -26,13 +26,9 @@ namespace NeukSearch
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //ProcessOpenEvent._instance.run();
             WindowHookNet windowhook = WindowHookNet.Instance;
             windowhook.WindowCreated += windowhook_WindowCreated;
             mng = MenuManager.Instance;
-
-            
-
         }
 
         private IntPtr Pid2Hwnd(int pid)
@@ -85,7 +81,6 @@ namespace NeukSearch
                     DataTable table = new DataTable();
                     table.Load(reader);
 
-                    //MessageBox.Show(reader.GetValue(1).ToString());
                     List<Menu> json_menulist = JsonUtil.Json2MenuList(Util.Base64Decode(table.Rows[0][1].ToString()), aArgs.Handle);
                     MenuManager.Instance.MenuSet.Add(aArgs.Handle, json_menulist);
                 }
