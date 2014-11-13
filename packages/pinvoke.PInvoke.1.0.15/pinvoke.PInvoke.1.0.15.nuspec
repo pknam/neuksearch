@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>pinvoke.PInvoke</id>
+    <version>1.0.15</version>
+    <authors>Mathias Lykkegaard Lorenzen</authors>
+    <owners>Mathias Lykkegaard Lorenzen</owners>
+    <projectUrl>https://github.com/ffMathy/pinvoke</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A library containing all PInvoke code so you don't have to import it every time. Maintained and updated to support the latest Windows OS.</description>
+    <releaseNotes />
+    <copyright>Copyright 2014</copyright>
+  </metadata>
+</package>
