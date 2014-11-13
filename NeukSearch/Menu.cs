@@ -45,6 +45,8 @@ namespace NeukSearch
             {
                 // 목록에서 삭제
                 MenuManager.Instance.MenuSet.Remove(hwnd);
+                MenuManager.Instance.FormInstance.refreshSearchResult();
+
                 return false;
             }
 

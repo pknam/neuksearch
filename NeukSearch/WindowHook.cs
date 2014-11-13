@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 using System.Management;
 
@@ -197,6 +198,7 @@ namespace NeukSearch
             catch (Exception aException)
             {
                 Console.Out.WriteLine("exception in thread:" + aException);
+                MessageBox.Show("exception in thread:" + aException);
             }
         }
 
@@ -313,12 +315,30 @@ namespace NeukSearch
             //}
 
             uint id = GetProcessId(hWnd);
-            int capacity = 255;
 
             Process process_by_id = Process.GetProcessById((int)id);
-            IntPtr process = Win32.OpenProcess(process_by_id, Win32.ProcessAccessFlags.All);
+            //string result;
+
+            //try
+            //{
+            //    result = process_by_id.Modules[0].FileName;
+            //}
+            //catch(Exception e)
+            //{
+            //    return "";
+            //}
+            //return result;
+
+
+            int capacity = 255;
+            IntPtr process = Win32.OpenProcess(process_by_id, Win32.ProcessAccessFlags.QueryLimitedInformation);
+
+            if (process.Equals(IntPtr.Zero))
+                return null;
+
             StringBuilder builder = new StringBuilder(capacity);
             Win32.QueryFullProcessImageName(process, 0, builder, ref capacity);
+            Win32.CloseHandle(process);
 
             return builder.ToString();
         }
