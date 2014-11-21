@@ -47,8 +47,7 @@ namespace NeukSearch
         void keyboardhook_KeyPressed(object sender, KeyPressedEventArgs e)
         {
             Win32.SetForegroundWindow(view.Handle);
-            view.SearchTextBox.Focus();
-            view.SearchTextBox.Select();
+            view.SearchTextBox.EditBox.Focus();
         }
 
         private IntPtr Pid2Hwnd(int pid)
