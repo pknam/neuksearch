@@ -84,7 +84,7 @@ namespace NeukSearch
 
                     if (tmpMenu.Descendents != null)
                     {
-                        foreach (Menu m in tmpMenu.Descendents.Reverse<Menu>())
+                        foreach (Menu m in tmpMenu.Descendents.GetRange(1, tmpMenu.Descendents.Count-1).Reverse<Menu>())
                             s.Push(m);
                     }
                 }
