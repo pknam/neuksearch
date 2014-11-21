@@ -17,6 +17,7 @@ namespace NeukSearch
     public partial class Form1 : Form
     {
         MenuManager mng;
+        private KeyboardHook keyboardhook;
 
         public Form1()
         {
@@ -32,6 +33,17 @@ namespace NeukSearch
             WindowHookNet windowhook = WindowHookNet.Instance;
             windowhook.WindowCreated += windowhook_WindowCreated;
             windowhook.WindowDestroyed += windowhook_WindowDestroy;
+
+            keyboardhook = new KeyboardHook();
+            keyboardhook.KeyPressed += keyboardhook_KeyPressed;
+            keyboardhook.RegisterHotKey(NeukSearch.ModifierKeys.Control | NeukSearch.ModifierKeys.Shift, Keys.C);
+
+        }
+
+        void keyboardhook_KeyPressed(object sender, KeyPressedEventArgs e)
+        {
+            Win32.SetForegroundWindow(this.Handle);
+            tbInput.Focus();
         }
 
         private IntPtr Pid2Hwnd(int pid)
