@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CustomTextBox
+namespace NeukSearch
 {
     class CustomButton : System.Windows.Forms.Button
     {

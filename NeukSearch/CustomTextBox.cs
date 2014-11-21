@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CustomTextBox
+namespace NeukSearch
 {
     using System.Windows.Forms;
     using System.Drawing;

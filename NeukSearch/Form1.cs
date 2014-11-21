@@ -21,7 +21,7 @@ namespace NeukSearch
 
         public Form1()
         {
-            CustomTextBox.CustomView view = new CustomTextBox.CustomView();
+            CustomView view = new CustomView();
             view.Show();
             InitializeComponent();
         }
