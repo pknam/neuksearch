@@ -42,6 +42,51 @@ namespace NeukSearch
             keyboardhook.KeyPressed += keyboardhook_KeyPressed;
             keyboardhook.RegisterHotKey(NeukSearch.ModifierKeys.Control | NeukSearch.ModifierKeys.Shift, Keys.C);
 
+            view.SearchTextBox.EditBox.TextChanged += EditBox_TextChanged;
+            view.SearchTextBox.EditBox.KeyDown += EditBox_KeyDown;
+
+        }
+
+        void EditBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Down:
+                    if (listBox1.SelectedIndex < listBox1.Items.Count - 1)
+                        listBox1.SetSelected(listBox1.SelectedIndex + 1, true);
+                    break;
+
+                case Keys.Up:
+                    if (listBox1.SelectedIndex > 0)
+                        listBox1.SetSelected(listBox1.SelectedIndex - 1, true);
+                    break;
+
+                case Keys.Enter:
+                    if (listBox1.SelectedIndex < 0)
+                        break;
+
+                    Menu selected = listBox1.SelectedItem as Menu;
+
+                    // 메뉴 클릭 실패시
+                    if (!selected.invoke())
+                    {
+                        // beep sound
+                        //System.Media.SystemSounds.Beep.Play();
+
+                        // 검색 폼 활성화
+                        view.Activate();
+                        view.SearchTextBox.EditBox.Focus();
+                    }
+                    else
+                        e.Handled = true;
+
+                    break;
+            }
+        }
+
+        void EditBox_TextChanged(object sender, EventArgs e)
+        {
+            this.refreshSearchResult();
         }
 
         void keyboardhook_KeyPressed(object sender, KeyPressedEventArgs e)
