@@ -18,10 +18,12 @@ namespace NeukSearch
     {
         MenuManager mng;
         private KeyboardHook keyboardhook;
+        private CustomView view;
+
 
         public Form1()
         {
-            CustomView view = new CustomView();
+            view = new CustomView();
             view.Show();
             InitializeComponent();
         }
@@ -44,8 +46,9 @@ namespace NeukSearch
 
         void keyboardhook_KeyPressed(object sender, KeyPressedEventArgs e)
         {
-            Win32.SetForegroundWindow(this.Handle);
-            tbInput.Focus();
+            Win32.SetForegroundWindow(view.Handle);
+            view.SearchTextBox.Focus();
+            view.SearchTextBox.Select();
         }
 
         private IntPtr Pid2Hwnd(int pid)

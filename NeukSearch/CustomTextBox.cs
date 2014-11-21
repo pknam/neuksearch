@@ -43,5 +43,13 @@ namespace NeukSearch
             }
             base.OnPaint(e);
         }
+
+        public void SetCursor()
+        {
+            EditBox.SelectAll();
+            EditBox.Select(0, 1);
+            EditBox.Focus();
+            
+        }
     }
 }

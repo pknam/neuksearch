@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace NeukSearch
 {
+    using System.IO;
+    using System.Diagnostics;
+    using System.Reflection;
     class CustomView : System.Windows.Forms.Form
     {
         public CustomButton RefreshButton { get; set; }
@@ -19,9 +22,8 @@ namespace NeukSearch
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             ControlInit();
-            SearchTextBox.Focus();
 
-            SearchTextBox.Enter += SearchTextBox_GotFocus;
+            this.Activated += Form_GotFocus;
             this.Deactivate += Form_LostFocus;
         }
 
@@ -38,7 +40,7 @@ namespace NeukSearch
             SettingsButton.Size = new System.Drawing.Size(50, 32);
         }
 
-        private void SearchTextBox_GotFocus(object sender, EventArgs e)
+        private void Form_GotFocus(object sender, EventArgs e)
         {
             this.Size = new System.Drawing.Size(460, 40);
 
@@ -49,6 +51,16 @@ namespace NeukSearch
             RefreshButton.Size = new System.Drawing.Size(50, 32);
             SettingsButton.Location = new System.Drawing.Point(RefreshButton.Width + SearchTextBox.Width + 13, 4);
             SettingsButton.Size = new System.Drawing.Size(50, 32);
+
+            //SearchTextBox.EditBox.BringToFront();
+            SearchTextBox.SetCursor();
+            
+            //SearchTextBox.Focus();
+            //SearchTextBox.EditBox.Focus();
+            //SearchTextBox.EditBox.Select(0, 1);
+            //SearchTextBox.Select();
+            //this.ActiveControl = SearchTextBox.EditBox;
+            //SearchTextBox.EditBox.SelectAll();
         }
 
         private void ControlInit()
@@ -57,9 +69,13 @@ namespace NeukSearch
             SettingsButton = new CustomButton();
             SearchTextBox = new CustomTextBox();
 
-            RefreshButton.BackgroundImage = System.Drawing.Image.FromFile("C:\\Users\\석준\\Google 드라이브\\source\\Visual Studio 2013\\Projects\\CustomTextBox\\CustomTextBox\\refresh.png");
+            //임시경로
+            //나중에수정해야함
+            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string project_path = path.Substring(0, path.Length-10);
+            RefreshButton.BackgroundImage = System.Drawing.Image.FromFile(project_path + "\\icon\\refresh.png");
             RefreshButton.BackgroundImageLayout = ImageLayout.Center;
-            SettingsButton.BackgroundImage = System.Drawing.Image.FromFile("C:\\Users\\석준\\Google 드라이브\\source\\Visual Studio 2013\\Projects\\CustomTextBox\\CustomTextBox\\settings.png");
+            SettingsButton.BackgroundImage = System.Drawing.Image.FromFile(project_path + "\\icon\\settings.png");
             SettingsButton.BackgroundImageLayout = ImageLayout.Center;
 
             this.Controls.Add(this.RefreshButton);
