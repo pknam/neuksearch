@@ -81,5 +81,8 @@ namespace NeukSearch
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool CloseHandle(IntPtr hHandle);
+
+        [DllImport("User32.dll")]
+        public static extern Int32 SetForegroundWindow(IntPtr hWnd);
     }
 }
