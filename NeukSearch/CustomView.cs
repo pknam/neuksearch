@@ -17,10 +17,11 @@ namespace NeukSearch
 
         public CustomView()
         {
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.AntiqueWhite;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            
             ControlInit();
 
             this.Activated += Form_GotFocus;
